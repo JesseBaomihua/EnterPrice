@@ -42,8 +42,8 @@ class HtmlParser(object):
             except Exception as e:
                 comarea = 'unfound'
 
-            print(companyurl)
-            print(comname)
-            print(comarea)
+            # print(companyurl)
+            # print(comname)
+            # print(comarea)
 
             insert_CompaneyTitle(cursor, province, companyurl, comname, comarea, comregdate)
