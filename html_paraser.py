@@ -1,10 +1,11 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
+from mysql_handler import insert_CompaneyTitle
 
 class HtmlParser(object):
 
-    def cityparase(self, html_content):
+    def cityparase(self, html_content, cursor, province, comregdate):
         # 将html代码从gb2312转码到utf-8
         # html_content = html_content.decode('gb2312', 'ignore').encode('utf-8')
         # soup = BeautifulSoup(html_content, 'html.parser', from_encoding='utf-8')
@@ -45,38 +46,4 @@ class HtmlParser(object):
             print(comname)
             print(comarea)
 
-
-
-
-        # print(meipailine)
-        # for meipailineper in meipailine:
-        #     inner_list = []
-        #     # print(meipailineper)
-        #     # print('-----')
-        #     # print(meipailineper.a)
-        #     # print(meipailineper.a.attrs['href'])
-        #     # print(meipailineper.a.attrs['title'])
-        #     # print(meipailineper.a.img.attrs['data-original'])
-        #     # print(meipailineper.a.img.attrs['src'])
-        #
-        #     inner_list.append(meipailineper.a.attrs['href'])
-        #     inner_list.append(meipailineper.a.attrs['title'])
-        #     inner_list.append(meipailineper.a.img.attrs['data-original'])
-        #     inner_list.append(meipailineper.a.img.attrs['src'])
-        #     outer_list.append(inner_list)
-        #
-        # return outer_list
-
-    def image_paraser_l3(self, html_content):
-        soup = BeautifulSoup(html_content, 'html.parser', from_encoding='utf-8')
-        imagelist = soup.find_all('img')
-        # print(imagelist)
-        imagel = []
-        for imageline in imagelist:
-            # print(imageline)
-            # print(imageline.attrs['src'])
-            # if(imageline.attrs['src'][1] == 'd'):
-               imagel.append(imageline.attrs['src'])
-        return imagel
-
-        # print(imagel)
+            insert_CompaneyTitle(cursor, province, companyurl, comname, comarea, comregdate)
