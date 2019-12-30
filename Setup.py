@@ -40,7 +40,9 @@ if __name__ == '__main__':
                     conn.commit()
                     print(province, comregdate, pagecnt)
                 except Exception as e:
-                    # print(e)
+                    print(e)
+                    with open('download.err', 'a') as f:
+                        f.write(url + '\n')
                     if(pagecnt - pagecnt_tmp == 0):
                         errcnt += 1
                     # print(pagecnt)

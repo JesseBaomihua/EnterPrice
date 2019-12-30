@@ -6,8 +6,10 @@ import time
 
 
 class HtmlDownloader(object):
-    def download(self, url):
-        cnt = 0
+    def download(self, url, errcnt):
+        if(errcnt > 5):
+            break
+
         if url is None:
             raise Exception('url is None')
         # 输出当前进行下载的url
@@ -18,25 +20,16 @@ class HtmlDownloader(object):
                                                      AppleWeb\Kit/537.36 (KHTML, like Gecko)\
                                                       Chrome/58.0.3029.110 Safari/537.36'})
         try:
-            with urllib.request.urlopen(request,timeout=3) as response:
+            with urllib.request.urlopen(request,timeout=1) as response:
                 if response.getcode() != 200:
-                    cnt += 1
-                    # 线程暂停5秒
-                    time.sleep(5)
                     # 递归调用
-                    if (cnt > 5):
-                        with open('download.err', 'a') as f:
-                            f.write(url)
-                        pass
-                    else:
-                        return self.download(url)
+                    return self.download(url,errcnt+1)
                 else:
                     return response.read()
         except urllib.error.HTTPError as e:
-            cnt += 1
             print(e)
             time.sleep(5)
-            if(cnt > 5):
+            if(errcnt > 5):
                 with open('download.err', 'a') as f:
                     f.write(url)
                 pass
